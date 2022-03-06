@@ -41,6 +41,9 @@
 			document.getElementById("num1").innerHTML=getRandomInt();
 			document.getElementById("num2").innerHTML=getRandomInt();
 			document.getElementById("result").innerHTML="";
+			document.getElementById("inserito").value="";
+			document.getElementById("inserito").disabled="";
+			document.getElementById("init-button").style.display="none";
 		}
 
 		function checkResult()
@@ -49,8 +52,12 @@
 			const num2=document.getElementById("num2").innerHTML;
 			const inserito=document.getElementById("inserito").value;
 			if(inserito==num1*num2)
+			{
 				document.getElementById("result").innerHTML="Corretto";
-			else
+				document.getElementById("inserito").disabled="true";
+				document.getElementById("init-button").style.display="";
+			}
+			else if(inserito!=null && inserito!="")
 				document.getElementById("result").innerHTML="Sbagliato";
 		}
 
@@ -64,8 +71,7 @@
 <h1 class="title"><span id="num1">3</span> × <span id="num2">5</span></h1>
 <input type="number" id="inserito" min="0" max="100">
 <input type="submit" value="Controlla" onclick="checkResult();">
-<br>
-<input type="submit" value="Nuovo" onclick="init();">
 <p id="result"></p>
+<input type="submit" id="init-button" value="Nuovo" onclick="init();">
 </body>
 </html>
