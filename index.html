@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tabelline - Quiz</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<style>
+		body
+		{
+			text-align: center;
+			font-family: sans-serif;
+			font-size: 80px;
+		}
+
+		.title
+		{
+			margin-top: 40px;
+		}
+	</style>
+	<script>
+		function init()
+		{
+			document.getElementById("num1").innerHTML=getRandomInt();
+			document.getElementById("num2").innerHTML=getRandomInt();
+			document.getElementById("result").innerHTML="";
+		}
+
+		function checkResult()
+		{
+			const num1=document.getElementById("num1").innerHTML;
+			const num2=document.getElementById("num2").innerHTML;
+			const inserito=document.getElementById("inserito").value;
+			if(inserito==num1*num2)
+				document.getElementById("result").innerHTML="Corretto";
+			else
+				document.getElementById("result").innerHTML="Sbagliato";
+		}
+
+		function getRandomInt()
+		{
+			return Math.floor(Math.random()*10);
+		}
+	</script>
+</head>
+<body onload="init();">
+<h1 class="title"><span id="num1">3</span> x <span id="num2">5</span></h1>
+<input type="number" id="inserito" min="0" max="100">
+<input type="submit" value="Controlla" onclick="checkResult();">
+<br>
+<input type="submit" value="Nuovo" onclick="init();">
+<p id="result"></p>
+</body>
+</html>
