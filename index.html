@@ -36,10 +36,14 @@
 		}
 	</style>
 	<script>
+		let num1, num2;
+
 		function init()
 		{
-			document.getElementById("num1").innerHTML=getRandomInt().toString();
-			document.getElementById("num2").innerHTML=getRandomInt().toString();
+			num1=getRandomInt().toString();
+			num2=getRandomInt().toString();
+			document.getElementById("num1").innerHTML=num1;
+			document.getElementById("num2").innerHTML=num2;
 			document.getElementById("result").innerHTML="";
 			document.getElementById("inserito").value="";
 			document.getElementById("inserito").disabled="";
@@ -48,8 +52,6 @@
 
 		function checkResult()
 		{
-			const num1=parseInt(document.getElementById("num1").innerHTML);
-			const num2=parseInt(document.getElementById("num2").innerHTML);
 			const inserito=parseInt(document.getElementById("inserito").value);
 
 			document.getElementById("result").innerHTML="Num1: '"+num1+"'<br>Num2: '"+num2+"'<br>Expected: '"+num1*num2+"'<br>Inserito: '"+inserito+"'";
