@@ -54,7 +54,16 @@
 		{
 			const inserito=parseInt(document.getElementById("inserito").value);
 
-			document.getElementById("result").innerHTML="Num1: '"+num1+"'<br>Num2: '"+num2+"'<br>Expected: '"+num1*num2+"'<br>Inserito: '"+inserito+"'";
+			if(inserito===num1*num2)
+			{
+				document.getElementById("result").innerHTML="Corretto";
+				document.getElementById("inserito").disabled="true";
+				document.getElementById("init-button").style.display="";
+			}
+			else if(inserito!=null)
+				document.getElementById("result").innerHTML="Sbagliato";
+
+			//document.getElementById("result").innerHTML="Num1: '"+num1+"'<br>Num2: '"+num2+"'<br>Expected: '"+num1*num2+"'<br>Inserito: '"+inserito+"'";
 		}
 
 		function getRandomInt()
@@ -64,7 +73,7 @@
 	</script>
 </head>
 <body onload="init();">
-<h1 class="title"><span id="num1">3</span> × <span id="num2">5</span></h1>
+<h1 class="title"><span id="num1"></span> × <span id="num2"></span></h1>
 <input type="number" id="inserito" min="0" max="100">
 <input type="submit" value="Controlla" onclick="checkResult();">
 <p id="result"></p>
