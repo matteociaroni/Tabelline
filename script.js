@@ -40,12 +40,11 @@ function getRandomInt(check=false)
 		tabellineSelezionate=tabelline.split(",");
 
 	let n;
-	if(check)
+	if(check && tabellineSelezionate.length>1)
 		n=tabellineSelezionate[Math.floor(Math.random()*(tabellineSelezionate.length-1))];
 	else
 		n=Math.floor(Math.random()*11);
 
-	console.log(n)
 	return n;
 }
 
