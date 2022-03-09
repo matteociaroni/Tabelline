@@ -4,41 +4,14 @@
 	<meta charset="UTF-8">
 	<title>Tabelline - Quiz</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style>
-		body
-		{
-			text-align: center;
-			font-family: sans-serif;
-			font-size: 60px;
-		}
-
-		.title
-		{
-			margin-top: 60px;
-		}
-
-		input
-		{
-			font-size: 20px;
-			margin: 0;
-			padding: 0;
-		}
-
-		input[type=number]
-		{
-			height: 40px;
-		}
-
-		input[type=submit]
-		{
-			width: 120px;
-			height: 44px;
-		}
-	</style>
+	<link rel="stylesheet" href="style.css">
 	<script src="script.js"></script>
 </head>
 <body onload="restore();">
-<h1 class="title"><span id="num1"></span> × <span id="num2"></span></h1>
+<br><a href="settings.html">Impostazioni</a>
+<div class="operazione">
+	<span id="num1"></span> × <span id="num2"></span>
+</div>
 <input type="number" id="inserito" min="0" max="100">
 <input type="submit" value="Controlla" onclick="checkResult();">
 <p id="result"></p>

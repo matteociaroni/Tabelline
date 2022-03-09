@@ -1,11 +1,12 @@
 let num1, num2;
+let tabellineSelezionate;
 
 function init(random=true)
 {
 	if(random)
 	{
-		num1=getRandomInt().toString();
-		num2=getRandomInt().toString();
+		num1=getRandomInt(true).toString();
+		num2=getRandomInt(false).toString();
 	}
 
 	document.getElementById("num1").innerHTML=num1;
@@ -32,15 +33,30 @@ function checkResult()
 		document.getElementById("result").innerHTML="😞";
 }
 
-function getRandomInt()
+function getRandomInt(check=false)
 {
-	return Math.floor(Math.random()*10);
+	const tabelline=localStorage.getItem("tabellineSelezionate");
+	if(tabelline!=null)
+		tabellineSelezionate=tabelline.split(",");
+
+	let n;
+	if(check)
+		n=tabellineSelezionate[Math.floor(Math.random()*(tabellineSelezionate.length-1))];
+	else
+		n=Math.floor(Math.random()*11);
+
+	console.log(n)
+	return n;
 }
 
 function restore()
 {
 	const oldNum1=localStorage.getItem("num1");
 	const oldNum2=localStorage.getItem("num2");
+	const tabelline=localStorage.getItem("tabellineSelezionate");
+	if(tabelline!=null)
+		tabellineSelezionate=tabelline.split(",");
+
 	if(oldNum1!=null && oldNum2!=null)
 	{
 		num1=oldNum1;
@@ -49,4 +65,36 @@ function restore()
 	}
 	else
 		init(true);
+
+
+}
+
+function updateSelected()
+{
+	let inputs=document.getElementsByTagName("input");
+	tabellineSelezionate=Array();
+	for(let i=0; i<inputs.length; i++)
+	{
+		if(inputs.item(i).checked===true)
+		{
+			tabellineSelezionate.push(inputs.item(i).id);
+		}
+	}
+	localStorage.setItem("tabellineSelezionate", tabellineSelezionate);
+}
+
+function setSelected()
+{
+	const tabelline=localStorage.getItem("tabellineSelezionate");
+	if(tabelline!=null)
+		tabellineSelezionate=tabelline;
+
+	let inputs=document.getElementsByTagName("input");
+	for(let i=0; i<inputs.length; i++)
+	{
+		if(tabellineSelezionate.indexOf(inputs.item(i).id)>-1)
+		{
+			inputs.item(i).checked=true;
+		}
+	}
 }
