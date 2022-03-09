@@ -64,8 +64,6 @@ function restore()
 	}
 	else
 		init(true);
-
-
 }
 
 function updateSelected()
@@ -80,6 +78,8 @@ function updateSelected()
 		}
 	}
 	localStorage.setItem("tabellineSelezionate", tabellineSelezionate);
+	if(tabellineSelezionate.indexOf(localStorage.getItem("num1"))<0)
+		localStorage.removeItem("num1");
 }
 
 function setSelected()
