@@ -35,42 +35,9 @@
 			height: 44px;
 		}
 	</style>
-	<script>
-		let num1, num2;
-
-		function init()
-		{
-			num1=getRandomInt().toString();
-			num2=getRandomInt().toString();
-			document.getElementById("num1").innerHTML=num1;
-			document.getElementById("num2").innerHTML=num2;
-			document.getElementById("result").innerHTML="";
-			document.getElementById("inserito").value="";
-			document.getElementById("inserito").disabled="";
-			document.getElementById("init-button").style.display="none";
-		}
-
-		function checkResult()
-		{
-			const inserito=parseInt(document.getElementById("inserito").value);
-
-			if(inserito===num1*num2)
-			{
-				document.getElementById("result").innerHTML="Corretto";
-				document.getElementById("inserito").disabled="true";
-				document.getElementById("init-button").style.display="";
-			}
-			else if(inserito!=null)
-				document.getElementById("result").innerHTML="Sbagliato";
-		}
-
-		function getRandomInt()
-		{
-			return Math.floor(Math.random()*10);
-		}
-	</script>
+	<script src="script.js"></script>
 </head>
-<body onload="init();">
+<body onload="restore();">
 <h1 class="title"><span id="num1"></span> × <span id="num2"></span></h1>
 <input type="number" id="inserito" min="0" max="100">
 <input type="submit" value="Controlla" onclick="checkResult();">
