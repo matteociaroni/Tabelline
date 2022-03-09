@@ -44,3 +44,18 @@ input[type=submit]
 	width: 120px;
 	height: 44px;
 }
+
+@media only screen and (max-width: 1200px)
+{
+	.operazione
+	{
+		font-size: 100px;
+		margin-top: 50px;
+		margin-bottom: 75px;
+	}
+
+	#result
+	{
+		font-size: 50px;
+	}
+}
