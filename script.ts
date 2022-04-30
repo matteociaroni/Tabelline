@@ -8,11 +8,11 @@ function getNum2() : number
 	return parseInt(localStorage.getItem("num2"));
 }
 
-function getTabellineSelezionate()
+function getTabellineSelezionate() : number[]
 {
 	const selected = localStorage.getItem("tabellineSelezionate");
 	if(selected != null)
-		return selected.split(",");
+		return selected.split(",").map(Number);
 	else
 		return Array();
 }
@@ -60,8 +60,9 @@ function checkResult() : void
 function getRandomInt(check : boolean = false) : number
 {
 	let n : number;
-	if(check && getTabellineSelezionate().length > 1)
-		n = getTabellineSelezionate()[Math.floor(Math.random() * (getTabellineSelezionate().length - 1))];
+
+	if(check && getTabellineSelezionate().length > 0)
+		n = getTabellineSelezionate()[Math.round(Math.random() * (getTabellineSelezionate().length - 1))];
 	else
 		n = Math.floor(Math.random() * 11);
 
@@ -88,7 +89,7 @@ function setSelected() : void
 	let inputs = document.getElementsByTagName("input");
 	for (let i = 0; i < inputs.length; i++)
 	{
-		if(getTabellineSelezionate().indexOf(inputs.item(i).id) > -1)
+		if(getTabellineSelezionate().indexOf(parseInt(inputs.item(i).id)) > -1)
 			inputs.item(i).checked = true;
 	}
 }
