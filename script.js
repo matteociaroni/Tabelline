@@ -5,7 +5,7 @@ function getNum2() {
     return parseInt(localStorage.getItem("num2"));
 }
 function getTabellineSelezionate() {
-    var selected = localStorage.getItem("tabellineSelezionate");
+    const selected = localStorage.getItem("tabellineSelezionate");
     if (selected != null)
         return selected.split(",");
     else
@@ -17,8 +17,7 @@ function setNum1(value) {
 function setNum2(value) {
     localStorage.setItem("num2", value.toString());
 }
-function init(random) {
-    if (random === void 0) { random = true; }
+function init(random = true) {
     if (random || isNaN(getNum1()) || isNaN(getNum2())) {
         setNum1(getRandomInt(true));
         setNum2(getRandomInt(false));
@@ -31,7 +30,7 @@ function init(random) {
     document.getElementById("init-button").style.display = "none";
 }
 function checkResult() {
-    var inserito = parseInt(document.getElementById("inserito").value);
+    const inserito = parseInt(document.getElementById("inserito").value);
     if (inserito == getNum1() * getNum2()) {
         document.getElementById("result").innerHTML = "😊";
         document.getElementById("inserito").setAttribute("disabled", "true");
@@ -40,9 +39,8 @@ function checkResult() {
     else if (!isNaN(inserito))
         document.getElementById("result").innerHTML = "😞";
 }
-function getRandomInt(check) {
-    if (check === void 0) { check = false; }
-    var n;
+function getRandomInt(check = false) {
+    let n;
     if (check && getTabellineSelezionate().length > 1)
         n = getTabellineSelezionate()[Math.floor(Math.random() * (getTabellineSelezionate().length - 1))];
     else
@@ -50,9 +48,9 @@ function getRandomInt(check) {
     return n;
 }
 function updateSelected() {
-    var inputs = document.getElementsByTagName("input");
-    var tabellineSelezionate = Array();
-    for (var i = 0; i < inputs.length; i++) {
+    let inputs = document.getElementsByTagName("input");
+    let tabellineSelezionate = Array();
+    for (let i = 0; i < inputs.length; i++) {
         if (inputs.item(i).checked === true)
             tabellineSelezionate.push(inputs.item(i).id);
     }
@@ -61,8 +59,8 @@ function updateSelected() {
         localStorage.removeItem("num1");
 }
 function setSelected() {
-    var inputs = document.getElementsByTagName("input");
-    for (var i = 0; i < inputs.length; i++) {
+    let inputs = document.getElementsByTagName("input");
+    for (let i = 0; i < inputs.length; i++) {
         if (getTabellineSelezionate().indexOf(inputs.item(i).id) > -1)
             inputs.item(i).checked = true;
     }
