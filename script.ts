@@ -41,7 +41,7 @@ class Game
     getTabellineSelezionate() : number[]
     {
         const selected = localStorage.getItem("tabellineSelezionate");
-        if(selected != null)
+        if(selected != "")
             return selected.split(",").map(Number);
         else
             return Array();
@@ -92,7 +92,7 @@ class Game
         if(check && this.getTabellineSelezionate().length > 0)
             n = this.getTabellineSelezionate()[Math.round(Math.random() * (this.getTabellineSelezionate().length - 1))];
         else
-            n = Math.floor(Math.random() * 11);
+            n = Math.round(Math.random() * 10);
 
         return n;
     }
