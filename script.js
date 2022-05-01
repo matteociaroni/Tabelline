@@ -13,9 +13,15 @@ class Num {
 class Game {
     num1;
     num2;
+    status;
     constructor() {
         this.num1 = new Num("num1");
         this.num2 = new Num("num2");
+        if (this.status === "solved")
+            this.init(true);
+    }
+    getStatus() {
+        return this.status;
     }
     getTabellineSelezionate() {
         const selected = localStorage.getItem("tabellineSelezionate");
@@ -31,6 +37,7 @@ class Game {
         }
     }
     init(random = true) {
+        this.status = "playing";
         this.setNumbers(random);
         document.getElementById("num1").innerHTML = this.num1.getValue().toString();
         document.getElementById("num2").innerHTML = this.num2.getValue().toString();
@@ -41,7 +48,8 @@ class Game {
     }
     checkResult() {
         const inserito = parseInt(document.getElementById("inserito").value);
-        if (inserito == this.num1.getValue() * this.num2.getValue()) {
+        if (inserito === this.num1.getValue() * this.num2.getValue()) {
+            this.status = "solved";
             document.getElementById("result").innerHTML = "😊";
             document.getElementById("inserito").setAttribute("disabled", "true");
             document.getElementById("init-button").style.display = "";

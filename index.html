@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Tabelline - Quiz</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="style.css">
-	<script src="script.js"></script>
+    <meta charset="UTF-8">
+    <title>Tabelline - Quiz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body onload="g.init(false);">
 <br><a href="settings.html">Impostazioni</a>
 <div class="operazione">
-	<span id="num1"></span> × <span id="num2"></span>
+    <span id="num1"></span> × <span id="num2"></span>
 </div>
 <input type="number" id="inserito" min="0" max="100">
 <input type="submit" value="Controlla" onclick="g.checkResult();">
@@ -18,3 +18,14 @@
 <input type="submit" id="init-button" value="Nuovo" onclick="g.init(true);">
 </body>
 </html>
+<script>
+    document.addEventListener("keypress", function (event) {
+        if (event.key === "Enter")
+		{
+			if(g.getStatus()==="playing")
+				g.checkResult();
+			else
+				g.init(true);
+        }
+    });
+</script>
