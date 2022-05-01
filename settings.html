@@ -7,7 +7,7 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="script.js"></script>
 </head>
-<body onload="setSelected()">
+<body onload="g.setTabellineCheckboxes()">
 <h1>Impostazioni</h1>
 <label for="0">Tabellina dello 0</label>&nbsp;&nbsp;<input type="checkbox" id="0"/><br><br>
 <label for="1">Tabellina dello 1</label>&nbsp;&nbsp;<input type="checkbox" id="1"/><br><br>
@@ -20,6 +20,6 @@
 <label for="8">Tabellina dello 8</label>&nbsp;&nbsp;<input type="checkbox" id="8"/><br><br>
 <label for="9">Tabellina dello 9</label>&nbsp;&nbsp;<input type="checkbox" id="9"/><br><br>
 <label for="10">Tabellina dello 10</label>&nbsp;&nbsp;<input type="checkbox" id="10"/><br><br>
-<input type="submit" value="Salva" class="btn" onclick="updateSelected();window.location.href='index.html'">
+<input type="submit" value="Salva" class="btn" onclick="g.changeTabelline();window.location.href='index.html'">
 </body>
 </html>

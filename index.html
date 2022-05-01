@@ -7,14 +7,14 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="script.js"></script>
 </head>
-<body onload="init(false);">
+<body onload="g.init(false);">
 <br><a href="settings.html">Impostazioni</a>
 <div class="operazione">
 	<span id="num1"></span> × <span id="num2"></span>
 </div>
 <input type="number" id="inserito" min="0" max="100">
-<input type="submit" value="Controlla" onclick="checkResult();">
+<input type="submit" value="Controlla" onclick="g.checkResult();">
 <p id="result"></p>
-<input type="submit" id="init-button" value="Nuovo" onclick="init(true);">
+<input type="submit" id="init-button" value="Nuovo" onclick="g.init(true);">
 </body>
 </html>
