@@ -14,3 +14,11 @@ html
 {
 	margin-top: 3rem;
 }
+
+@media screen and (max-width: 1080px)
+{
+	.columns, .block
+	{
+		margin-top: 1rem;
+	}
+}
