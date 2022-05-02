@@ -14,9 +14,11 @@ class Game {
     num1;
     num2;
     status;
+    tentativi;
     constructor() {
         this.num1 = new Num("num1");
         this.num2 = new Num("num2");
+        this.tentativi = new Array();
         if (this.status === "solved")
             this.init(true);
     }
@@ -55,22 +57,24 @@ class Game {
     checkResult() {
         const inserito = parseInt(document.getElementById("inserito").value);
         const button = document.getElementById("button");
-        if (inserito === this.num1.getValue() * this.num2.getValue()) {
-            this.status = "solved";
-            const emojis = Game.resultEmoji(true);
-            document.getElementById("result").innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            document.getElementById("inserito").setAttribute("disabled", "true");
-            button.setAttribute("value", "Avanti");
+        if (!isNaN(inserito)) {
+            let emojis;
             button.classList.remove("is-info");
-            button.classList.remove("is-danger");
-            button.classList.add("is-success");
-        }
-        else if (!isNaN(inserito)) {
-            const emojis = Game.resultEmoji(false);
+            this.nuovoTentativo();
+            if (inserito === this.num1.getValue() * this.num2.getValue()) {
+                this.status = "solved";
+                emojis = Game.resultEmoji(true);
+                document.getElementById("inserito").setAttribute("disabled", "true");
+                button.setAttribute("value", "Avanti");
+                button.classList.remove("is-danger");
+                button.classList.add("is-success");
+            }
+            else {
+                emojis = Game.resultEmoji(false);
+                button.setAttribute("value", "Riprova");
+                button.classList.add("is-danger");
+            }
             document.getElementById("result").innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-            button.setAttribute("value", "Riprova");
-            button.classList.remove("is-info");
-            button.classList.add("is-danger");
         }
     }
     getRandomInt(check = false) {
@@ -105,11 +109,37 @@ class Game {
         else
             g.init(true);
     }
+    nuovoTentativo() {
+        const caricato = JSON.parse(localStorage.getItem("tentativi"));
+        if (caricato != null)
+            this.tentativi = caricato;
+        this.tentativi.push(new Tentativo(new Date(), this.num1.getValue(), this.num2.getValue()));
+        localStorage.setItem("tentativi", JSON.stringify(this.tentativi));
+    }
     static resultEmoji(success) {
         if (success)
             return ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
         else
             return ["😩", "😭", "😢", "☹️", "😞", "😩"];
+    }
+}
+class Tentativo {
+    _timestamp;
+    _num1;
+    _num2;
+    constructor(timestamp, num1, num2) {
+        this._timestamp = timestamp;
+        this._num1 = num1;
+        this._num2 = num2;
+    }
+    get timestamp() {
+        return this._timestamp;
+    }
+    get num1() {
+        return this._num1;
+    }
+    get num2() {
+        return this._num2;
     }
 }
 const g = new Game();
