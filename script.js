@@ -42,9 +42,10 @@ class Game {
         document.getElementById("num1").innerHTML = this.num1.getValue().toString();
         document.getElementById("num2").innerHTML = this.num2.getValue().toString();
         document.getElementById("result").innerHTML = "";
-        document.getElementById("inserito").value = "";
-        document.getElementById("inserito").removeAttribute("disabled");
-        document.getElementById("inserito").focus();
+        const input = document.getElementById("inserito");
+        input.value = "";
+        input.removeAttribute("disabled");
+        input.focus();
         const button = document.getElementById("button");
         button.setAttribute("value", "Controlla");
         button.classList.remove("is-success");
