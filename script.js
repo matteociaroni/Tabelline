@@ -56,7 +56,8 @@ class Game {
         const button = document.getElementById("button");
         if (inserito === this.num1.getValue() * this.num2.getValue()) {
             this.status = "solved";
-            document.getElementById("result").innerHTML = "😊";
+            const emojis = Game.resultEmoji(true);
+            document.getElementById("result").innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
             document.getElementById("inserito").setAttribute("disabled", "true");
             button.setAttribute("value", "Avanti");
             button.classList.remove("is-info");
@@ -64,7 +65,8 @@ class Game {
             button.classList.add("is-success");
         }
         else if (!isNaN(inserito)) {
-            document.getElementById("result").innerHTML = "😞";
+            const emojis = Game.resultEmoji(false);
+            document.getElementById("result").innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
             button.setAttribute("value", "Riprova");
             button.classList.remove("is-info");
             button.classList.add("is-danger");
@@ -101,6 +103,12 @@ class Game {
             g.checkResult();
         else
             g.init(true);
+    }
+    static resultEmoji(success) {
+        if (success)
+            return ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
+        else
+            return ["😩", "😭", "😢", "☹️", "😞", "😩"];
     }
 }
 const g = new Game();
