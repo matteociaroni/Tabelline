@@ -15,10 +15,20 @@ html
 	margin-top: 3rem;
 }
 
+.table
+{
+	font-size: 0.8rem;
+}
+
 @media screen and (max-width: 1080px)
 {
 	.columns, .block
 	{
 		margin-top: 1rem;
+	}
+
+	.table
+	{
+		font-size: 0.7rem;
 	}
 }
