@@ -4,3 +4,8 @@ html
 	padding: 30px;
 	font-size: 25px
 }
+
+.button
+{
+	transition: 300ms;
+}

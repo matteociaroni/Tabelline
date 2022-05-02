@@ -71,12 +71,14 @@ class Game
 		const button = document.getElementById("button");
 		button.setAttribute("value", "Controlla");
 		button.classList.remove("is-success");
+		button.classList.remove("is-danger");
 		button.classList.add("is-info");
 	}
 
 	checkResult() : void
 	{
 		const inserito : number = parseInt((<HTMLInputElement>document.getElementById("inserito")).value);
+		const button = document.getElementById("button");
 
 		if(inserito === this.num1.getValue() * this.num2.getValue())
 		{
@@ -85,13 +87,19 @@ class Game
 			document.getElementById("result").innerHTML = "😊";
 			document.getElementById("inserito").setAttribute("disabled", "true");
 
-			const button = document.getElementById("button");
 			button.setAttribute("value", "Avanti");
 			button.classList.remove("is-info");
+			button.classList.remove("is-danger");
 			button.classList.add("is-success");
 		}
 		else if(!isNaN(inserito))
+		{
 			document.getElementById("result").innerHTML = "😞";
+
+			button.setAttribute("value", "Riprova");
+			button.classList.remove("is-info");
+			button.classList.add("is-danger");
+		}
 	}
 
 	getRandomInt(check : boolean = false) : number
