@@ -9,3 +9,8 @@ html
 {
 	transition: 300ms;
 }
+
+.columns, .block
+{
+	margin-top: 3rem;
+}
