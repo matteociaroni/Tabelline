@@ -66,7 +66,12 @@ class Game
         document.getElementById("result").innerHTML = "";
         (<HTMLInputElement>document.getElementById("inserito")).value = "";
         document.getElementById("inserito").removeAttribute("disabled");
-        document.getElementById("init-button").style.display = "none";
+        document.getElementById("inserito").focus();
+
+        const button=document.getElementById("button");
+        button.setAttribute("value", "Controlla");
+        button.classList.remove("is-success");
+        button.classList.add("is-info");
     }
 
     checkResult() : void
@@ -79,7 +84,11 @@ class Game
 
             document.getElementById("result").innerHTML = "😊";
             document.getElementById("inserito").setAttribute("disabled", "true");
-            document.getElementById("init-button").style.display = "";
+
+            const button=document.getElementById("button");
+            button.setAttribute("value", "Avanti");
+            button.classList.remove("is-info");
+            button.classList.add("is-success");
         }
         else if(!isNaN(inserito))
             document.getElementById("result").innerHTML = "😞";
@@ -120,6 +129,14 @@ class Game
             if(this.getTabellineSelezionate().indexOf(parseInt(inputs.item(i).id)) > -1)
                 inputs.item(i).checked = true;
         }
+    }
+
+    nextAction()
+    {
+        if(g.getStatus() === "playing")
+            g.checkResult();
+        else
+            g.init(true);
     }
 }
 
