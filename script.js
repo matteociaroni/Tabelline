@@ -27,7 +27,7 @@ class Game {
     }
     getTabellineSelezionate() {
         const selected = localStorage.getItem("tabellineSelezionate");
-        if (selected != "")
+        if (selected != "" && selected != null)
             return selected.split(",").map(Number);
         else
             return Array();
