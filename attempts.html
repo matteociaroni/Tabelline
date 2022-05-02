@@ -8,11 +8,11 @@
 	<link rel="stylesheet" href="style.css?1.2">
 	<script src="script.js?1.2"></script>
 </head>
-<body onload="loadTentativi();">
+<body onload="g.loadTentativi();">
 <h1 class="title">Tentativi</h1>
 <div class="columns">
 	<div class="column is-4 is-offset-4">
-		<table class="table is-fullwidth">
+		<table class="table is-fullwidth is-hoverable">
 			<thead>
 			<tr>
 				<th>Data e ora</th>
@@ -27,27 +27,3 @@
 </div>
 </body>
 </html>
-
-<script>
-	function loadTentativi()
-	{
-		const tabella=document.getElementById("tentativi");
-		const caricato=localStorage.getItem("tentativi");
-		if(caricato!=null)
-		{
-			const tentativi=JSON.parse(caricato);
-
-			for(let i=0; i<tentativi.length;  i++)
-			{
-				const riga=document.createElement("tr");
-				const data=document.createElement("td");
-				data.innerText=new Date(tentativi[i]._timestamp).toLocaleString("it-IT");
-				const operazione=document.createElement("td");
-				operazione.innerText=tentativi[i]._num1+" × "+tentativi[i]._num2;
-				riga.appendChild(data);
-				riga.appendChild(operazione);
-				tabella.appendChild(riga);
-			}
-		}
-	}
-</script>

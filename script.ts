@@ -88,12 +88,13 @@ class Game
 		{
 			let emojis;
 			button.classList.remove("is-info");
-			this.nuovoTentativo();
+			const corretto=inserito === this.num1.getValue() * this.num2.getValue();
+			this.nuovoTentativo(corretto);
+			emojis=Game.resultEmoji(corretto);
 
-			if(inserito === this.num1.getValue() * this.num2.getValue())
+			if(corretto)
 			{
 				this.status = "solved";
-				emojis=Game.resultEmoji(true);
 				document.getElementById("inserito").setAttribute("disabled", "true");
 
 				button.setAttribute("value", "Avanti");
@@ -102,7 +103,6 @@ class Game
 			}
 			else
 			{
-				emojis=Game.resultEmoji(false);
 				button.setAttribute("value", "Riprova");
 				button.classList.add("is-danger");
 			}
@@ -155,14 +155,14 @@ class Game
 			g.init(true);
 	}
 
-	nuovoTentativo() : void
+	nuovoTentativo(esito : boolean) : void
 	{
 		const caricato=JSON.parse(localStorage.getItem("tentativi"));
 
 		if(caricato != null)
 			this.tentativi=caricato;
 
-		this.tentativi.push(new Tentativo(new Date(), this.num1.getValue(), this.num2.getValue()));
+		this.tentativi.push(new Tentativo(new Date(), this.num1.getValue(), this.num2.getValue(), esito));
 		localStorage.setItem("tentativi", JSON.stringify(this.tentativi));
 	}
 
@@ -173,6 +173,47 @@ class Game
 		else
 			return ["😩", "😭", "😢", "☹️", "😞", "😩"];
 	}
+
+	loadTentativi()
+	{
+		const tabella=document.getElementById("tentativi");
+		const caricato=localStorage.getItem("tentativi");
+		if(caricato!=null)
+		{
+			const tentativi=JSON.parse(caricato);
+
+			for(let i=0; i<tentativi.length;  i++)
+			{
+				const riga=document.createElement("tr");
+				riga.classList.add(tentativi[i]._esito ? "is-success" : "is-danger");
+				const data=document.createElement("td");
+				data.innerText=new Date(tentativi[i]._timestamp).toLocaleString("it-IT");
+				const operazione=document.createElement("td");
+				operazione.innerText=tentativi[i]._num1+" × "+tentativi[i]._num2;
+				riga.appendChild(data);
+				riga.appendChild(operazione);
+				tabella.appendChild(riga);
+			}
+		}
+	}
+
+	static loadTabelline()
+	{
+		const tabelline=document.getElementById("tabelline");
+
+		for(let i=0; i<=10;  i++)
+		{
+			const label=document.createElement("label");
+			label.setAttribute("for", i.toString());
+			label.innerText="Tabellina "+i+" ";
+			const input=document.createElement("input");
+			input.setAttribute("type", "checkbox");
+			input.id=i.toString();
+			tabelline.appendChild(label);
+			tabelline.appendChild(input);
+			tabelline.appendChild(document.createElement("br"));
+		}
+	}
 }
 
 class Tentativo
@@ -180,12 +221,14 @@ class Tentativo
 	private readonly _timestamp : Date
 	private readonly _num1 : number;
 	private readonly _num2 : number;
+	private readonly _esito : boolean
 
-	constructor(timestamp : Date, num1 : number, num2 : number)
+	constructor(timestamp : Date, num1 : number, num2 : number, esito : boolean)
 	{
 		this._timestamp=timestamp;
 		this._num1=num1;
 		this._num2=num2;
+		this._esito=esito;
 	}
 
 	get timestamp() : Date
@@ -201,6 +244,11 @@ class Tentativo
 	get num2() : number
 	{
 		return this._num2;
+	}
+
+	get esito() : boolean
+	{
+		return this._esito;
 	}
 }
 

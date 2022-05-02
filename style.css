@@ -19,7 +19,18 @@ html
 {
 	font-size: 0.8rem;
 }
+/*
+tr.is-success
+{
+	background: rgba(0, 107, 62, 0.33);
 
+}
+
+tr.is-danger
+{
+	background: rgba(222, 5, 5, 0.33);
+}
+*/
 @media screen and (max-width: 1080px)
 {
 	.columns, .block

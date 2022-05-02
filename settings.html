@@ -8,30 +8,10 @@
 	<link rel="stylesheet" href="style.css">
 	<script src="script.js?1.2"></script>
 </head>
-<body onload="loadTabelline(); g.setTabellineCheckboxes()">
+<body onload="Game.loadTabelline(); g.setTabellineCheckboxes()">
 <h1 class="title">Impostazioni</h1>
 <div id="tabelline"></div>
 <br>
 <button value="Salva" class="button is-info" onclick="g.changeTabelline();window.location.href='index.html'">Salva</button>
 </body>
 </html>
-
-<script>
-	function loadTabelline()
-	{
-		const tabelline=document.getElementById("tabelline");
-
-		for(let i=0; i<=10;  i++)
-		{
-			const label=document.createElement("label");
-			label.setAttribute("for", i.toString());
-			label.innerText="Tabellina "+i+" ";
-			const input=document.createElement("input");
-			input.setAttribute("type", "checkbox");
-			input.id=i.toString();
-			tabelline.appendChild(label);
-			tabelline.appendChild(input);
-			tabelline.appendChild(document.createElement("br"));
-		}
-	}
-</script>
