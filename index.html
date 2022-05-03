@@ -20,7 +20,7 @@
                 <input class="input" type="number" id="inserito" min="0" max="100">
             </div>
             <div class="column is-3">
-                <input type="submit" class="button is-info is-fullwidth" value="Controlla" id="button" onclick="g.nextAction();">
+                <input type="submit" class="button is-info is-fullwidth" value="Controlla" id="button">
             </div>
         </div>
         <div class="block">
@@ -41,4 +41,9 @@
 		if(event.key === "Enter")
 			g.nextAction();
 	});
+
+	document.getElementById("button").addEventListener("click", function()
+    {
+		g.nextAction();
+    })
 </script>
