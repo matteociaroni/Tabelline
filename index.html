@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="style.css?1.2">
-    <script src="script.js?1.2"></script>
 </head>
-<body onload="g.init(false);" style="">
+<body>
 <a style="font-size: 0.5rem" class="button" href="settings.html">Impostazioni</a>
 <a style="font-size: 0.5rem" class="button" href="attempts.html">Tentativi</a>
 <div class="columns is-desktop">
@@ -31,7 +30,12 @@
 </div>
 </body>
 </html>
-<script>
+<script type="module">
+	import { Game } from "./script/Game.js";
+
+	const g = new Game();
+	g.init(false);
+
 	document.addEventListener("keypress", function(event)
 	{
 		if(event.key === "Enter")

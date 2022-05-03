@@ -6,12 +6,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 	<link rel="stylesheet" href="style.css">
-	<script src="script.js?1.2"></script>
 </head>
-<body onload="Game.loadTabelline(); g.setTabellineCheckboxes()">
+<body onload="">
 <h1 class="title">Impostazioni</h1>
 <div id="tabelline"></div>
 <br>
-<button value="Salva" class="button is-info" onclick="g.changeTabelline();window.location.href='index.html'">Salva</button>
+<button value="Salva" class="button is-info" id="save">Salva</button>
 </body>
 </html>
+<script type="module">
+	import { Game } from "./script/Game.js";
+
+	const g = new Game();
+	Game.showTablesList();
+	g.setSelectedCheckboxes()
+
+	document.getElementById("save").addEventListener("click", function (event) {
+		g.changeTables();
+		window.location.href="index.html";
+	})
+</script>
