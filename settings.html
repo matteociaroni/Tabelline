@@ -15,10 +15,10 @@
 </body>
 </html>
 <script type="module">
-	import { Game } from "./script/Game.js";
+	import {GraphicalGame} from "./script/GraphicalGame.js";
 
-	const g = new Game();
-	Game.showTablesList();
+	const g = new GraphicalGame();
+	GraphicalGame.showTablesList();
 	g.setSelectedCheckboxes()
 
 	document.getElementById("save").addEventListener("click", function (event) {

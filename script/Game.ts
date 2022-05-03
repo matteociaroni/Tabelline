@@ -16,12 +16,22 @@ export class Game
 			this.init(true);
 	}
 
+	getNum1() : number
+	{
+		return this.num1.getValue();
+	}
+
+	getNum2() : number
+	{
+		return this.num2.getValue();
+	}
+
 	getStatus() : string
 	{
 		return this.status;
 	}
 
-	getSelectedTables() : number[]
+	getSelectedTables() : Array<number>
 	{
 		const loaded = localStorage.getItem("tabellineSelezionate");
 		if(loaded != "" && loaded != null)
@@ -43,53 +53,23 @@ export class Game
 	{
 		this.status = "playing";
 		this.setNumbers(random);
-
-		document.getElementById("num1").innerHTML = this.num1.getValue().toString();
-		document.getElementById("num2").innerHTML = this.num2.getValue().toString();
-		document.getElementById("result").innerText = "";
-
-		const inputNumber=<HTMLInputElement>document.getElementById("inserito");
-		inputNumber.value = "";
-		inputNumber.removeAttribute("disabled");
-		inputNumber.focus();
-
-		const button=document.getElementById("button");
-		button.setAttribute("value", "Controlla");
-		button.classList.remove("is-success");
-		button.classList.remove("is-danger");
-		button.classList.add("is-info");
 	}
 
-	checkResult() : void
+	checkResult(attemptValue : number) : boolean
 	{
-		const inputNumber=<HTMLInputElement>document.getElementById("inserito");
-		const attemptValue : number = parseInt(inputNumber.value);
-
 		if(!isNaN(attemptValue))
 		{
 			const isCorrect = attemptValue === this.num1.getValue() * this.num2.getValue();
-			const button=document.getElementById("button");
-			button.classList.remove("is-info");
-
 			this.storeAttempt(attemptValue);
 
 			if(isCorrect)
-			{
 				this.status = "solved";
-				inputNumber.setAttribute("disabled", "true");
 
-				button.setAttribute("value", "Avanti");
-				button.classList.remove("is-danger");
-				button.classList.add("is-success");
-			}
-			else
-			{
-				button.setAttribute("value", "Riprova");
-				button.classList.add("is-danger");
-			}
-			document.getElementById("result").innerHTML = Game.resultEmoji(isCorrect);
+			return isCorrect;
 		}
+		return false;
 	}
+
 
 	/**
 	 * @return a random integer
@@ -112,43 +92,12 @@ export class Game
 	 *
 	 * Change the selected times tables in localStorage.
 	 */
-	changeTables() : void
+	changeTables(selectedTables : number[]) : void
 	{
-		let inputs = document.getElementsByTagName("input");
-		let selectedTables = Array();
-		for(let i = 0; i < inputs.length; i++)
-		{
-			if(inputs.item(i).checked === true)
-				selectedTables.push(inputs.item(i).id);
-		}
 		localStorage.setItem("tabellineSelezionate", selectedTables.toString());
 
 		if(selectedTables.indexOf(this.num1.getValue()) < 0)
 			localStorage.removeItem("num1");
-	}
-
-	/**
-	 * Check all checkboxes of the selected times tables
-	 */
-	setSelectedCheckboxes() : void
-	{
-		let inputs = document.getElementsByTagName("input");
-		for(let i = 0; i < inputs.length; i++)
-		{
-			if(this.getSelectedTables().indexOf(parseInt(inputs.item(i).id)) > -1)
-				inputs.item(i).checked = true;
-		}
-	}
-
-	/**
-	 * This method is executed when the button is pressed or when the user press the enter key
-	 */
-	nextAction()
-	{
-		if(this.getStatus() === "playing")
-			this.checkResult();
-		else
-			this.init(true);
 	}
 
 	/**
@@ -157,72 +106,23 @@ export class Game
 	 */
 	storeAttempt(provided : number) : void
 	{
-		const loaded = JSON.parse(localStorage.getItem("tentativi"));
+		let attempts = JSON.parse(localStorage.getItem("tentativi"));
 
-		if(loaded != null)
-		{
-			const attempts = loaded;
+		if(attempts == null)
+			attempts = new Array<Attempt>();
 
-			attempts.push(new Attempt(new Date(), this.num1.getValue(), this.num2.getValue(), provided));
-			localStorage.setItem("tentativi", JSON.stringify(attempts));
-		}
+		attempts.push(new Attempt(new Date(), this.num1.getValue(), this.num2.getValue(), provided));
+		localStorage.setItem("tentativi", JSON.stringify(attempts));
 	}
 
-	static resultEmoji(success : boolean) : string
+	getAttempts() : Array<Attempt>
 	{
-		const successEmojis=["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
-		const failEmojis=["😩", "😭", "😢", "☹️", "😞", "😩"];
-
-		if(success)
-			return successEmojis[Math.floor(Math.random() * successEmojis.length)];
-		else
-			return failEmojis[Math.floor(Math.random() * failEmojis.length)];
-	}
-
-	/**
-	 * Show all the attempts made by the user and stored in the localStorage
-	 */
-	showAttempts()
-	{
-		const containerTable = document.getElementById("tentativi");
 		const loaded = localStorage.getItem("tentativi");
+		let attempts = Array<Attempt>();
+
 		if(loaded != null)
-		{
-			const attempts = JSON.parse(loaded);
+			attempts = JSON.parse(loaded);
 
-			for(let i = 0; i < attempts.length; i++)
-			{
-				const row = document.createElement("tr");
-				row.classList.add(attempts[i]._esito ? "is-success" : "is-danger");
-				const date = document.createElement("td");
-				date.innerText = new Date(attempts[i]._timestamp).toLocaleString("it-IT");
-				const operation = document.createElement("td");
-				operation.innerText = attempts[i]._num1 + " × " + attempts[i]._num2;
-				row.appendChild(date);
-				row.appendChild(operation);
-				containerTable.appendChild(row);
-			}
-		}
-	}
-
-	/**
-	 * Show all the possible tables (with checkboxes) in the settings page
-	 */
-	static showTablesList()
-	{
-		const container = document.getElementById("tabelline");
-
-		for(let i = 0; i <= 10; i++)
-		{
-			const label = document.createElement("label");
-			label.setAttribute("for", i.toString());
-			label.innerText = "Tabellina " + i + " ";
-			const input = document.createElement("input");
-			input.setAttribute("type", "checkbox");
-			input.id = i.toString();
-			container.appendChild(label);
-			container.appendChild(input);
-			container.appendChild(document.createElement("br"));
-		}
+		return attempts;
 	}
 }

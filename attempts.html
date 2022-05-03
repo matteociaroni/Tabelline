@@ -16,6 +16,7 @@
 			<tr>
 				<th>Data e ora</th>
 				<th>Operazione</th>
+				<th>Risposta</th>
 			</tr>
 			</thead>
 			<tbody id="tentativi">
@@ -27,8 +28,8 @@
 </body>
 </html>
 <script type="module">
-	import { Game } from "./script/Game.js";
+	import {GraphicalGame} from "./script/GraphicalGame.js";
 
-	const g = new Game();
+	const g = new GraphicalGame();
 	g.showAttempts();
 </script>
