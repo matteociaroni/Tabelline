@@ -1,5 +1,6 @@
 import { Num } from "./Num.js";
 import { Attempt } from "./Attempt.js";
+import { Stats } from "./Stats.js";
 export class Game {
     num1;
     num2;
@@ -85,5 +86,15 @@ export class Game {
         if (loaded != null)
             attempts = JSON.parse(loaded);
         return attempts;
+    }
+    getOrderedAttempt() {
+        const attempts = this.getAttempts();
+        if (attempts == null)
+            return;
+        let stats = new Stats();
+        for (let i = 0; i < attempts.length; i++) {
+            stats.pushAttempt(attempts[i]);
+        }
+        return stats;
     }
 }
