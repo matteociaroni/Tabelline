@@ -20,17 +20,10 @@ export class Game {
     getStatus() {
         return this.status;
     }
-    getSelectedTables() {
-        const loaded = localStorage.getItem("tabellineSelezionate");
-        if (loaded != "" && loaded != null)
-            return loaded.split(",").map(Number);
-        else
-            return Array();
-    }
     setNumbers(random) {
         if (random || isNaN(this.num1.getValue()) || isNaN(this.num2.getValue())) {
-            this.num1.setValue(this.getRandomInt(true));
-            this.num2.setValue(this.getRandomInt(false));
+            this.num1.setValue(this.getRandomInt());
+            this.num2.setValue(this.getRandomInt());
         }
     }
     init(random = true) {
@@ -49,25 +42,9 @@ export class Game {
     }
     /**
      * @return a random integer
-     * @param check specifies if the number must be included in the currently selected times tables
      */
-    getRandomInt(check = false) {
-        let n;
-        if (check && this.getSelectedTables().length > 0)
-            n = this.getSelectedTables()[Math.round(Math.random() * (this.getSelectedTables().length - 1))];
-        else
-            n = Math.round(Math.random() * 10);
-        return n;
-    }
-    /**
-     * This method is executed when the user press the save button in the settings page.
-     *
-     * Change the selected times tables in localStorage.
-     */
-    changeTables(selectedTables) {
-        localStorage.setItem("tabellineSelezionate", selectedTables.toString());
-        if (selectedTables.indexOf(this.num1.getValue()) < 0)
-            localStorage.removeItem("num1");
+    getRandomInt() {
+        return Math.round(Math.random() * 10);
     }
     /**
      * Store the current attempt in localStorage
