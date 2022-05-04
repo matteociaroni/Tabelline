@@ -1,4 +1,5 @@
 import { Game } from "./Game.js";
+import { Attempt } from "./Attempt.js";
 export class GraphicalGame {
     game;
     constructor() {
@@ -73,14 +74,15 @@ export class GraphicalGame {
         const attempts = this.game.getAttempts();
         if (attempts != null) {
             for (let i = 0; i < attempts.length; i++) {
+                const currentAttempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
                 const row = document.createElement("tr");
                 //row.classList.add(attempts[i]._providedValue ==  attempts[i]._num1 * attempts[i]._num2 ? "is-success" : "is-danger");
                 const date = document.createElement("td");
-                date.innerText = new Date(attempts[i]._timestamp).toLocaleString("it-IT");
+                date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
                 const operation = document.createElement("td");
-                operation.innerText = attempts[i]._num1 + " × " + attempts[i]._num2;
+                operation.innerText = currentAttempt.num1 + " × " + currentAttempt.num2;
                 const answer = document.createElement("td");
-                answer.innerText = attempts[i]._providedValue.toString();
+                answer.innerText = currentAttempt.providedValue.toString();
                 row.appendChild(date);
                 row.appendChild(operation);
                 row.appendChild(answer);
@@ -116,7 +118,7 @@ export class GraphicalGame {
         }
     }
     showStats(option) {
-        const stats = this.game.getOrderedAttempt();
+        const stats = this.game.getOrderedAttempts();
         const tableHead = document.getElementById("head");
         tableHead.innerHTML = "";
         const el = document.createElement("th");
@@ -146,7 +148,7 @@ export class GraphicalGame {
                     const attempts = stats.getAttemptsForTable(i, j);
                     let countErrors = 0;
                     for (let k = 0; k < attempts.length; k++) {
-                        if (attempts[k]._num1 * attempts[k]._num2 != attempts[k]._providedValue)
+                        if (attempts[k].num1 * attempts[k].num2 != attempts[k].providedValue)
                             countErrors++;
                     }
                     if (attempts.length == 0)

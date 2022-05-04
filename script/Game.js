@@ -87,13 +87,13 @@ export class Game {
             attempts = JSON.parse(loaded);
         return attempts;
     }
-    getOrderedAttempt() {
+    getOrderedAttempts() {
         const attempts = this.getAttempts();
         if (attempts == null)
             return;
         let stats = new Stats();
         for (let i = 0; i < attempts.length; i++) {
-            stats.pushAttempt(attempts[i]);
+            stats.pushAttempt(Object.setPrototypeOf(attempts[i], Attempt.prototype));
         }
         return stats;
     }

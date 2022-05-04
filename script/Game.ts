@@ -71,7 +71,6 @@ export class Game
 		return false;
 	}
 
-
 	/**
 	 * @return a random integer
 	 * @param check specifies if the number must be included in the currently selected times tables
@@ -127,7 +126,7 @@ export class Game
 		return attempts;
 	}
 
-	getOrderedAttempt()
+	getOrderedAttempts()
 	{
 		const attempts=this.getAttempts();
 
@@ -138,7 +137,7 @@ export class Game
 
 		for(let i=0; i<attempts.length; i++)
 		{
-			stats.pushAttempt(attempts[i]);
+			stats.pushAttempt(Object.setPrototypeOf(attempts[i], Attempt.prototype));
 		}
 		return stats;
 	}

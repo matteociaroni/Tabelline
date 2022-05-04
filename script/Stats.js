@@ -8,7 +8,7 @@ export class Stats {
                 this.stats.push(new AttemptsForTable(i, j));
     }
     pushAttempt(attempt) {
-        this.getAttemptsForTable(attempt._num1, attempt._num2).push(attempt);
+        this.getAttemptsForTable(attempt.num1, attempt.num2).push(attempt);
     }
     getAttemptsForTable(num1, num2) {
         for (let i = 0; i < this.stats.length; i++) {

@@ -16,7 +16,7 @@ export class Stats
 
 	pushAttempt(attempt : Attempt) : void
 	{
-		this.getAttemptsForTable(attempt._num1, attempt._num2).push(attempt as Attempt);
+		this.getAttemptsForTable(attempt.num1, attempt.num2).push(attempt as Attempt);
 	}
 
 	getAttemptsForTable(num1 : number, num2 : number) : Array<Attempt>
