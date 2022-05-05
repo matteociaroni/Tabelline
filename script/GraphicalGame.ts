@@ -70,8 +70,8 @@ export class GraphicalGame
 
 	static resultEmoji(success : boolean) : string
 	{
-		const successEmojis = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
-		const failEmojis = ["😩", "😭", "😢", "☹️", "😞", "😩"];
+		const successEmojis = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳", "😸", "😺"];
+		const failEmojis = ["😩", "😭", "😢", "☹️", "😞", "😩", "😿"];
 
 		if(success)
 			return successEmojis[Math.floor(Math.random() * successEmojis.length)];
@@ -93,7 +93,7 @@ export class GraphicalGame
 			{
 				const currentAttempt=Object.setPrototypeOf(attempts[i], Attempt.prototype);
 				const row = document.createElement("tr");
-				//row.classList.add(attempts[i]._providedValue ==  attempts[i]._num1 * attempts[i]._num2 ? "is-success" : "is-danger");
+				//row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
 				const date = document.createElement("td");
 				date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
 				const operation = document.createElement("td");
@@ -161,7 +161,6 @@ export class GraphicalGame
 					else
 						value=Math.round(100*countErrors/attempts.length)+"%";
 				}
-
 				el.innerHTML = value;
 				row.appendChild(el);
 			}

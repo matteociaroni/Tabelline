@@ -50,8 +50,8 @@ export class GraphicalGame {
             this.init(true);
     }
     static resultEmoji(success) {
-        const successEmojis = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
-        const failEmojis = ["😩", "😭", "😢", "☹️", "😞", "😩"];
+        const successEmojis = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳", "😸", "😺"];
+        const failEmojis = ["😩", "😭", "😢", "☹️", "😞", "😩", "😿"];
         if (success)
             return successEmojis[Math.floor(Math.random() * successEmojis.length)];
         else
@@ -67,7 +67,7 @@ export class GraphicalGame {
             for (let i = 0; i < attempts.length; i++) {
                 const currentAttempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
                 const row = document.createElement("tr");
-                //row.classList.add(attempts[i]._providedValue ==  attempts[i]._num1 * attempts[i]._num2 ? "is-success" : "is-danger");
+                //row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
                 const date = document.createElement("td");
                 date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
                 const operation = document.createElement("td");
