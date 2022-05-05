@@ -65,6 +65,8 @@ export class GraphicalGame {
         containerTable.innerText = "";
         const attempts = this.game.getAttempts();
         if (attempts != null) {
+            let count = 0;
+            let fails = 0;
             for (let i = 0; i < attempts.length; i++) {
                 const currentAttempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
                 if ((from == null || from.toISOString() <= currentAttempt.timestamp) && (to == null || to.toISOString() > currentAttempt.timestamp)) {
@@ -80,8 +82,20 @@ export class GraphicalGame {
                     row.appendChild(operation);
                     row.appendChild(answer);
                     containerTable.appendChild(row);
+                    count++;
+                    if (attempts[i].providedValue != attempts[i].num1 * attempts[i].num2)
+                        fails++;
                 }
             }
+            const totalRow = document.createElement("tr");
+            const countCell = document.createElement("td");
+            countCell.innerText = "Totale: " + count;
+            const successesAndFails = document.createElement("td");
+            successesAndFails.innerText = "Corretti: " + (count - fails) + " - Errati: " + fails;
+            successesAndFails.colSpan = 2;
+            totalRow.appendChild(countCell);
+            totalRow.appendChild(successesAndFails);
+            containerTable.appendChild(totalRow);
         }
     }
     showStats(option) {
