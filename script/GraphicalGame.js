@@ -49,15 +49,6 @@ export class GraphicalGame {
         else
             this.init(true);
     }
-    changeTables() {
-        let inputs = document.getElementsByTagName("input");
-        let selectedTables = Array();
-        for (let i = 0; i < inputs.length; i++) {
-            if (inputs.item(i).checked === true)
-                selectedTables.push(inputs.item(i).id);
-        }
-        this.game.changeTables(selectedTables);
-    }
     static resultEmoji(success) {
         const successEmojis = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳"];
         const failEmojis = ["😩", "😭", "😢", "☹️", "😞", "😩"];
@@ -88,33 +79,6 @@ export class GraphicalGame {
                 row.appendChild(answer);
                 containerTable.appendChild(row);
             }
-        }
-    }
-    /**
-     * Check all checkboxes of the selected times tables
-     */
-    setSelectedCheckboxes() {
-        let inputs = document.getElementsByTagName("input");
-        for (let i = 0; i < inputs.length; i++) {
-            if (this.game.getSelectedTables().indexOf(parseInt(inputs.item(i).id)) > -1)
-                inputs.item(i).checked = true;
-        }
-    }
-    /**
-     * Show all the possible tables (with checkboxes) in the settings page
-     */
-    static showTablesList() {
-        const container = document.getElementById("tables");
-        for (let i = 0; i <= 10; i++) {
-            const label = document.createElement("label");
-            label.setAttribute("for", i.toString());
-            label.innerText = "Tabellina " + i + " ";
-            const input = document.createElement("input");
-            input.setAttribute("type", "checkbox");
-            input.id = i.toString();
-            container.appendChild(label);
-            container.appendChild(input);
-            container.appendChild(document.createElement("br"));
         }
     }
     showStats(option) {
