@@ -10,6 +10,16 @@
 <body>
 <h1 class="title">Tentativi</h1>
 <div class="columns">
+	<div class="column is-2 is-offset-4">
+		<label class="label">Data iniziale</label>
+		<input type="date" class="input time-filter" id="date-from">
+	</div>
+	<div class="column is-2">
+		<label class="label">Data finale</label>
+		<input type="date" class="input time-filter" id="date-to">
+	</div>
+</div>
+<div class="columns">
 	<div class="column is-6 is-offset-3">
 		<table class="table is-fullwidth is-hoverable">
 			<thead>
@@ -30,6 +40,31 @@
 <script type="module">
 	import {GraphicalGame} from "./script/GraphicalGame.js";
 
+	document.getElementById("date-from").value=new Date().toISOString().substring(0,10);
+
 	const g = new GraphicalGame();
-	g.showAttempts();
+	update();
+
+	document.getElementById("date-from").addEventListener("change", function(){
+		update();
+	})
+
+	document.getElementById("date-to").addEventListener("change", function(){
+		update();
+	})
+
+	function update()
+	{
+		let from =new Date(document.getElementById("date-from").value);
+		let to =new Date(document.getElementById("date-to").value);
+		to.setDate(to.getDate()+1);
+
+		if(!from instanceof Date || isNaN(from))
+			from=null;
+
+		if(!to instanceof Date || isNaN(to))
+			to=null;
+
+		g.showAttempts(from, to);
+	}
 </script>

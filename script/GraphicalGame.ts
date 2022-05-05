@@ -82,9 +82,10 @@ export class GraphicalGame
 	/**
 	 * Show all the attempts made by the user and stored in the localStorage
 	 */
-	showAttempts() : void
+	showAttempts(from : Date, to : Date) : void
 	{
 		const containerTable = document.getElementById("attempts");
+		containerTable.innerText="";
 		const attempts = this.game.getAttempts();
 
 		if(attempts != null)
@@ -92,18 +93,22 @@ export class GraphicalGame
 			for(let i = 0; i < attempts.length; i++)
 			{
 				const currentAttempt=Object.setPrototypeOf(attempts[i], Attempt.prototype);
-				const row = document.createElement("tr");
-				//row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
-				const date = document.createElement("td");
-				date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
-				const operation = document.createElement("td");
-				operation.innerText = currentAttempt.num1 + " × " + currentAttempt.num2;
-				const answer = document.createElement("td");
-				answer.innerText = currentAttempt.providedValue.toString();
-				row.appendChild(date);
-				row.appendChild(operation);
-				row.appendChild(answer);
-				containerTable.appendChild(row);
+
+				if((from == null || from.toISOString()<=currentAttempt.timestamp) && (to == null || to.toISOString()>currentAttempt.timestamp))
+				{
+					const row = document.createElement("tr");
+					//row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
+					const date = document.createElement("td");
+					date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
+					const operation = document.createElement("td");
+					operation.innerText = currentAttempt.num1 + " × " + currentAttempt.num2;
+					const answer = document.createElement("td");
+					answer.innerText = currentAttempt.providedValue.toString();
+					row.appendChild(date);
+					row.appendChild(operation);
+					row.appendChild(answer);
+					containerTable.appendChild(row);
+				}
 			}
 		}
 	}

@@ -10,7 +10,7 @@ html
 	transition: 300ms;
 }
 
-a.button
+a.button, .time-filter
 {
 	font-size: 0.6rem;
 }
@@ -22,6 +22,12 @@ a.button
 
 .table
 {
+	font-size: 0.8rem;
+}
+
+.label
+{
+	text-align: left;
 	font-size: 0.8rem;
 }
 /*
