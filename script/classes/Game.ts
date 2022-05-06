@@ -51,7 +51,7 @@ export class Game
 	{
 		if(!isNaN(attemptValue))
 		{
-			const isCorrect = attemptValue === this.num1.getValue() * this.num2.getValue();
+			const isCorrect : boolean = attemptValue === this.num1.getValue() * this.num2.getValue();
 			this.storeAttempt(attemptValue);
 
 			if(isCorrect)
@@ -76,7 +76,7 @@ export class Game
 	 */
 	storeAttempt(provided : number) : void
 	{
-		let attempts = JSON.parse(localStorage.getItem("tentativi"));
+		let attempts : Array<Attempt> = JSON.parse(localStorage.getItem("tentativi"));
 
 		if(attempts == null)
 			attempts = new Array<Attempt>();
@@ -87,8 +87,8 @@ export class Game
 
 	getAttempts() : Array<Attempt>
 	{
-		const loaded = localStorage.getItem("tentativi");
-		let attempts = Array<Attempt>();
+		const loaded : string = localStorage.getItem("tentativi");
+		let attempts : Array<Attempt> = Array<Attempt>();
 
 		if(loaded != null)
 			attempts = JSON.parse(loaded);
@@ -96,16 +96,16 @@ export class Game
 		return attempts;
 	}
 
-	getOrderedAttempts()
+	getOrderedAttempts() : Stats
 	{
-		const attempts=this.getAttempts();
+		const attempts : Array<Attempt> = this.getAttempts();
 
-		if(attempts==null)
+		if(attempts == null)
 			return;
 
-		let stats = new Stats();
+		let stats : Stats = new Stats();
 
-		for(let i=0; i<attempts.length; i++)
+		for(let i = 0; i < attempts.length; i++)
 		{
 			stats.pushAttempt(Object.setPrototypeOf(attempts[i], Attempt.prototype));
 		}

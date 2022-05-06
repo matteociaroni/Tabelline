@@ -69,7 +69,7 @@ export class GraphicalGame {
             let fails = 0;
             for (let i = 0; i < attempts.length; i++) {
                 const currentAttempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
-                if ((from == null || from.toISOString() <= currentAttempt.timestamp) && (to == null || to.toISOString() > currentAttempt.timestamp)) {
+                if ((from == null || from.toISOString() <= currentAttempt.timestamp.toString()) && (to == null || to.toISOString() > currentAttempt.timestamp.toString())) {
                     const row = document.createElement("tr");
                     //row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
                     const date = document.createElement("td");

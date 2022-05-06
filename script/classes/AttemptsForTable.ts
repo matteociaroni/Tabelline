@@ -4,23 +4,23 @@ export class AttemptsForTable
 {
 	private readonly _num1 : number;
 	private readonly _num2 : number;
-	private attempts : Array<Attempt>;
+	private readonly _attempts : Array<Attempt>;
 
 	constructor(num1 : number, num2 : number)
 	{
 		this._num1=num1;
 		this._num2=num2;
-		this.attempts=new Array<Attempt>();
+		this._attempts=new Array<Attempt>();
 	}
 
 	pushAttempt(attempt : Attempt) : void
 	{
-		this.attempts.push(attempt);
+		this._attempts.push(attempt);
 	}
 
-	getAttempts() : Array<Attempt>
+	get attempts() : Array<Attempt>
 	{
-		return this.attempts;
+		return this._attempts;
 	}
 
 	get num1() : number

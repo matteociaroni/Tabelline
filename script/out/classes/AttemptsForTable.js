@@ -1,17 +1,17 @@
 export class AttemptsForTable {
     _num1;
     _num2;
-    attempts;
+    _attempts;
     constructor(num1, num2) {
         this._num1 = num1;
         this._num2 = num2;
-        this.attempts = new Array();
+        this._attempts = new Array();
     }
     pushAttempt(attempt) {
-        this.attempts.push(attempt);
+        this._attempts.push(attempt);
     }
-    getAttempts() {
-        return this.attempts;
+    get attempts() {
+        return this._attempts;
     }
     get num1() {
         return this._num1;

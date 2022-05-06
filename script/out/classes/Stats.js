@@ -13,7 +13,7 @@ export class Stats {
     getAttemptsForTable(num1, num2) {
         for (let i = 0; i < this.stats.length; i++) {
             if (this.stats[i].num1 == num1 && this.stats[i].num2 == num2)
-                return this.stats[i].getAttempts();
+                return this.stats[i].attempts;
         }
     }
 }
