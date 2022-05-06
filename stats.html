@@ -33,17 +33,4 @@
 </div>
 </body>
 </html>
-<script type="module">
-	import {GraphicalGame} from "./script/out/GraphicalGame.js";
-
-	const g = new GraphicalGame();
-	g.showStats(window.location.hash.substring(1));
-
-	document.getElementById("show-attempts").addEventListener("click", function() {
-		g.showStats("attempts");
-	})
-
-	document.getElementById("show-errors").addEventListener("click", function() {
-		g.showStats("errors");
-	})
-</script>
+<script type="module" src="script/out/stats.js"></script>
