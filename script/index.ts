@@ -12,4 +12,4 @@ document.addEventListener("keypress", function(event)
 document.getElementById("button").addEventListener("click", function()
 {
 	g.nextAction();
-})
+});

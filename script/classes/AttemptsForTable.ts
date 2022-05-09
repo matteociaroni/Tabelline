@@ -8,9 +8,9 @@ export class AttemptsForTable
 
 	constructor(num1 : number, num2 : number)
 	{
-		this._num1=num1;
-		this._num2=num2;
-		this._attempts=new Array<Attempt>();
+		this._num1 = num1;
+		this._num2 = num2;
+		this._attempts = new Array<Attempt>();
 	}
 
 	pushAttempt(attempt : Attempt) : void

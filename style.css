@@ -35,6 +35,7 @@ a.button, .time-filter
 {
 	font-size: 7rem;
 }
+
 /*
 tr.is-success
 {
@@ -47,6 +48,7 @@ tr.is-danger
 	background: rgba(222, 5, 5, 0.33);
 }
 */
+
 @media screen and (max-width: 1080px)
 {
 	.columns, .block
@@ -60,10 +62,10 @@ tr.is-danger
 	}
 
 	td
-    {
+	{
 		padding-left: 0 !important;
 		padding-right: 0 !important;
-        text-align: center !important;
+		text-align: center !important;
 	}
 
 	.numbers
