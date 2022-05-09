@@ -93,7 +93,7 @@ export class GraphicalGame
 					const row = document.createElement("tr");
 					//row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
 					const date = document.createElement("td");
-					date.innerText = new Date(currentAttempt.timestamp).toLocaleString("it-IT");
+					date.innerText = GraphicalGame.formatDate(new Date(currentAttempt.timestamp));
 					const operation = document.createElement("td");
 					operation.innerText = currentAttempt.num1 + " × " + currentAttempt.num2;
 					const answer = document.createElement("td");
@@ -117,6 +117,18 @@ export class GraphicalGame
 			totalRow.appendChild(successesAndFails);
 			containerTable.appendChild(totalRow);
 		}
+	}
+
+	static formatDate(date)
+	{
+		const day = date.getDate();
+		const month = date.getMonth() + 1;
+		const hours = date.getHours();
+		const minutes = date.getMinutes();
+		return (day < 10 ? "0" : "") + day + "/" +
+			(month < 10 ? "0" : "") + month + " " +
+			(hours < 10 ? "0" : "") + hours + ":" +
+			(minutes < 10 ? "0" : "") + minutes;
 	}
 
 	showStats(option)
