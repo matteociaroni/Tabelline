@@ -56,7 +56,14 @@ tr.is-danger
 
 	.table
 	{
-		font-size: 0.5rem;
+		font-size: 0.6rem;
+	}
+
+	td
+    {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+        text-align: center !important;
 	}
 
 	.numbers
