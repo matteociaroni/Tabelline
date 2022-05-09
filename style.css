@@ -30,6 +30,11 @@ a.button, .time-filter
 	text-align: left;
 	font-size: 0.8rem;
 }
+
+.numbers
+{
+	font-size: 7rem;
+}
 /*
 tr.is-success
 {
@@ -52,5 +57,10 @@ tr.is-danger
 	.table
 	{
 		font-size: 0.5rem;
+	}
+
+	.numbers
+	{
+		font-size: 5rem;
 	}
 }
