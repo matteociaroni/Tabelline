@@ -10,9 +10,9 @@ export class Game
 
 	constructor()
 	{
-		this.num1 = new Num("num1");
-		this.num2 = new Num("num2");
-		if(this.status === "solved")
+		this.num1=new Num("num1");
+		this.num2=new Num("num2");
+		if(this.status==="solved")
 			this.init(true);
 	}
 
@@ -40,9 +40,9 @@ export class Game
 		}
 	}
 
-	init(random = true)
+	init(random=true)
 	{
-		this.status = "playing";
+		this.status="playing";
 		this.setNumbers(random);
 	}
 
@@ -50,10 +50,10 @@ export class Game
 	{
 		if(!isNaN(attemptValue))
 		{
-			const isCorrect = attemptValue === this.num1.getValue() * this.num2.getValue();
+			const isCorrect=attemptValue===this.num1.getValue()*this.num2.getValue();
 			this.storeAttempt(attemptValue);
 			if(isCorrect)
-				this.status = "solved";
+				this.status="solved";
 			return isCorrect;
 		}
 		return false;
@@ -64,7 +64,7 @@ export class Game
 	 */
 	getRandomInt()
 	{
-		return Math.round(Math.random() * 10);
+		return Math.round(Math.random()*10);
 	}
 
 	/**
@@ -73,32 +73,29 @@ export class Game
 	 */
 	storeAttempt(provided)
 	{
-		let attempts = JSON.parse(localStorage.getItem("tentativi"));
-		if(attempts == null)
-			attempts = new Array();
+		let attempts=JSON.parse(localStorage.getItem("tentativi"));
+		if(attempts==null)
+			attempts=new Array();
 		attempts.push(new Attempt(new Date(), this.num1.getValue(), this.num2.getValue(), provided));
 		localStorage.setItem("tentativi", JSON.stringify(attempts));
 	}
 
 	getAttempts()
 	{
-		const loaded = localStorage.getItem("tentativi");
-		let attempts = Array();
-		if(loaded != null)
-			attempts = JSON.parse(loaded);
+		const loaded=localStorage.getItem("tentativi");
+		let attempts=Array();
+		if(loaded!=null)
+			attempts=JSON.parse(loaded);
 		return attempts;
 	}
 
 	getOrderedAttempts()
 	{
-		const attempts = this.getAttempts();
-		if(attempts == null)
+		const attempts=this.getAttempts();
+		if(attempts==null)
 			return;
-		let stats = new Stats();
-		for(let i = 0; i < attempts.length; i++)
-		{
-			stats.pushAttempt(Object.setPrototypeOf(attempts[i], Attempt.prototype));
-		}
+		let stats=new Stats();
+		attempts.forEach((attempt) => stats.pushAttempt(Object.setPrototypeOf(attempt, Attempt.prototype)));
 		return stats;
 	}
 }

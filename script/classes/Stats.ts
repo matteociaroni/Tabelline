@@ -3,28 +3,27 @@ import {Attempt} from "./Attempt.js";
 
 export class Stats
 {
-	private stats : Array<AttemptsForTable>;
+	private readonly stats: AttemptsForTable[][];
 
 	constructor()
 	{
-		this.stats = new Array<AttemptsForTable>();
+		this.stats = [];
 
-		for(let i = 0; i <= 10; i++)
-			for(let j = 0; j <= 10; j++)
-				this.stats.push(new AttemptsForTable(i, j));
+		for (let i = 0; i <= 10; i++)
+		{
+			this.stats[i] = [];
+			for (let j = 0; j <= 10; j++)
+				this.stats[i][j] = new AttemptsForTable(i, j);
+		}
 	}
 
-	pushAttempt(attempt : Attempt) : void
+	pushAttempt(attempt: Attempt): void
 	{
 		this.getAttemptsForTable(attempt.num1, attempt.num2).push(attempt as Attempt);
 	}
 
-	getAttemptsForTable(num1 : number, num2 : number) : Array<Attempt>
+	getAttemptsForTable(num1: number, num2: number): Array<Attempt>
 	{
-		for(let i = 0; i < this.stats.length; i++)
-		{
-			if(this.stats[i].num1 == num1 && this.stats[i].num2 == num2)
-				return this.stats[i].attempts;
-		}
+		return this.stats[num1][num2].attempts;
 	}
 }

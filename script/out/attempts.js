@@ -1,7 +1,7 @@
 import {GraphicalGame} from "./classes/GraphicalGame.js";
 
-document.getElementById("date-from").value = new Date().toISOString().substring(0, 10);
-const g = new GraphicalGame();
+document.getElementById("date-from").value=new Date().toISOString().substring(0, 10);
+const g=new GraphicalGame();
 update();
 document.getElementById("date-from").addEventListener("change", function()
 {
@@ -14,12 +14,12 @@ document.getElementById("date-to").addEventListener("change", function()
 
 function update()
 {
-	let from = new Date(document.getElementById("date-from").value);
-	let to = new Date(document.getElementById("date-to").value);
-	to.setDate(to.getDate() + 1);
+	let from=new Date(document.getElementById("date-from").value);
+	let to=new Date(document.getElementById("date-to").value);
+	to.setDate(to.getDate()+1);
 	if(isNaN(from.getDate()))
-		from = null;
+		from=null;
 	if(isNaN(to.getDate()))
-		to = null;
+		to=null;
 	g.showAttempts(from, to);
 }

@@ -4,14 +4,37 @@ import {Stats} from "./Stats";
 
 export class GraphicalGame
 {
-	private game : Game;
+	private game: Game;
 
 	constructor()
 	{
 		this.game = new Game();
 	}
 
-	init(random : boolean = true) : void
+	static resultEmoji(success: boolean): string
+	{
+		const successEmojis: Array<string> = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳", "😸", "😺"];
+		const failEmojis: Array<string> = ["😩", "😭", "😢", "☹️", "😞", "😩", "😿"];
+
+		if(success)
+			return successEmojis[Math.floor(Math.random() * successEmojis.length)];
+		else
+			return failEmojis[Math.floor(Math.random() * failEmojis.length)];
+	}
+
+	static formatDate(date: Date): string
+	{
+		const day: number = date.getDate();
+		const month: number = date.getMonth() + 1;
+		const hours: number = date.getHours();
+		const minutes: number = date.getMinutes();
+		return (day < 10 ? "0" : "") + day + "/" +
+			(month < 10 ? "0" : "") + month + " " +
+			(hours < 10 ? "0" : "") + hours + ":" +
+			(minutes < 10 ? "0" : "") + minutes;
+	}
+
+	init(random: boolean = true): void
 	{
 		this.game.init(random);
 
@@ -19,27 +42,27 @@ export class GraphicalGame
 		document.getElementById("num2").innerHTML = this.game.getNum2().toString();
 		document.getElementById("result").innerText = "";
 
-		const inputNumber : HTMLInputElement = <HTMLInputElement>document.getElementById("answer");
+		const inputNumber: HTMLInputElement = <HTMLInputElement>document.getElementById("answer");
 		inputNumber.value = "";
 		inputNumber.removeAttribute("disabled");
 		inputNumber.focus();
 
-		const button : HTMLElement = document.getElementById("button");
+		const button: HTMLElement = document.getElementById("button");
 		button.setAttribute("value", "Controlla");
 		button.classList.remove("is-success");
 		button.classList.remove("is-danger");
 		button.classList.add("is-info");
 	}
 
-	checkResult() : void
+	checkResult(): void
 	{
-		const inputNumber : HTMLInputElement = <HTMLInputElement>document.getElementById("answer");
-		const attemptValue : number = parseInt(inputNumber.value);
+		const inputNumber: HTMLInputElement = <HTMLInputElement>document.getElementById("answer");
+		const attemptValue: number = parseInt(inputNumber.value);
 
 		if(!isNaN(attemptValue))
 		{
-			const isCorrect : boolean = this.game.checkResult(attemptValue);
-			const button : HTMLElement = document.getElementById("button");
+			const isCorrect: boolean = this.game.checkResult(attemptValue);
+			const button: HTMLElement = document.getElementById("button");
 			button.classList.remove("is-info");
 
 			if(isCorrect)
@@ -61,7 +84,7 @@ export class GraphicalGame
 	/**
 	 * This method is executed when the button is pressed or when the user press the enter key
 	 */
-	nextAction() : void
+	nextAction(): void
 	{
 		if(this.game.getStatus() === "playing")
 			this.checkResult();
@@ -69,44 +92,33 @@ export class GraphicalGame
 			this.init(true);
 	}
 
-	static resultEmoji(success : boolean) : string
-	{
-		const successEmojis : Array<string> = ["🏆", "🥇", "🏅", "😃", "😄", "😊", "😀", "🎊", "🎉", "🥳", "😸", "😺"];
-		const failEmojis : Array<string> = ["😩", "😭", "😢", "☹️", "😞", "😩", "😿"];
-
-		if(success)
-			return successEmojis[Math.floor(Math.random() * successEmojis.length)];
-		else
-			return failEmojis[Math.floor(Math.random() * failEmojis.length)];
-	}
-
 	/**
 	 * Show all the attempts made by the user and stored in the localStorage
 	 */
-	showAttempts(from : Date, to : Date) : void
+	showAttempts(from: Date, to: Date): void
 	{
-		const containerTable : HTMLElement = document.getElementById("attempts");
+		const containerTable: HTMLElement = document.getElementById("attempts");
 		containerTable.innerText = "";
-		const attempts : Array<Attempt> = this.game.getAttempts();
+		const attempts: Array<Attempt> = this.game.getAttempts();
 
 		if(attempts != null)
 		{
-			let count : number = 0;
-			let fails : number = 0;
+			let count: number = 0;
+			let fails: number = 0;
 
-			for(let i = 0; i < attempts.length; i++)
+			for (let i = 0; i < attempts.length; i++)
 			{
-				const currentAttempt : Attempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
+				const currentAttempt: Attempt = Object.setPrototypeOf(attempts[i], Attempt.prototype);
 
 				if((from == null || from.toISOString() <= currentAttempt.timestamp.toString()) && (to == null || to.toISOString() > currentAttempt.timestamp.toString()))
 				{
-					const row : HTMLTableRowElement = document.createElement("tr");
+					const row: HTMLTableRowElement = document.createElement("tr");
 					//row.classList.add(attempts[i].providedValue ==  attempts[i].num1 * attempts[i].num2 ? "is-success" : "is-danger");
-					const date : HTMLTableCellElement = document.createElement("td");
+					const date: HTMLTableCellElement = document.createElement("td");
 					date.innerText = GraphicalGame.formatDate(new Date(currentAttempt.timestamp));
-					const operation : HTMLTableCellElement = document.createElement("td");
+					const operation: HTMLTableCellElement = document.createElement("td");
 					operation.innerText = currentAttempt.num1 + " × " + currentAttempt.num2;
-					const answer : HTMLTableCellElement = document.createElement("td");
+					const answer: HTMLTableCellElement = document.createElement("td");
 					answer.innerText = currentAttempt.providedValue.toString();
 					row.appendChild(date);
 					row.appendChild(operation);
@@ -117,10 +129,10 @@ export class GraphicalGame
 						fails++;
 				}
 			}
-			const totalRow : HTMLTableRowElement = document.createElement("tr");
-			const countCell : HTMLTableCellElement = document.createElement("td");
+			const totalRow: HTMLTableRowElement = document.createElement("tr");
+			const countCell: HTMLTableCellElement = document.createElement("td");
 			countCell.innerText = "Totale: " + count;
-			const successesAndFails : HTMLTableCellElement = document.createElement("td");
+			const successesAndFails: HTMLTableCellElement = document.createElement("td");
 			successesAndFails.innerText = "Corretti: " + (count - fails) + " - Errati: " + fails;
 			successesAndFails.colSpan = 2;
 			totalRow.appendChild(countCell);
@@ -129,61 +141,49 @@ export class GraphicalGame
 		}
 	}
 
-	static formatDate(date : Date) : string
+	showStats(option: "errors" | "attempts"): void
 	{
-		const day : number = date.getDate();
-		const month : number = date.getMonth() + 1;
-		const hours : number = date.getHours();
-		const minutes : number = date.getMinutes();
-		return (day < 10 ? "0" : "") + day + "/" +
-			(month < 10 ? "0" : "") + month + " " +
-			(hours < 10 ? "0" : "") + hours + ":" +
-			(minutes < 10 ? "0" : "") + minutes;
-	}
-
-	showStats(option : "errors" | "attempts") : void
-	{
-		const stats : Stats = this.game.getOrderedAttempts();
-		const tableHead : HTMLElement = document.getElementById("head");
+		const stats: Stats = this.game.getOrderedAttempts();
+		const tableHead: HTMLElement = document.getElementById("head");
 		tableHead.innerHTML = "";
 		tableHead.appendChild(document.createElement("th")); //fill empty cell
 
 		//set the table head with numbers 0 to 10
-		for(let i = 0; i <= 10; i++)
+		for (let i = 0; i <= 10; i++)
 		{
-			const el : HTMLTableCellElement = document.createElement("th");
+			const el: HTMLTableCellElement = document.createElement("th");
 			el.innerHTML = i.toString();
 			tableHead.appendChild(el);
 		}
 
-		const totalTitle1 : HTMLTableCellElement = document.createElement("th");
+		const totalTitle1: HTMLTableCellElement = document.createElement("th");
 		totalTitle1.innerText = option == "attempts" ? "Σ" : "";
 		tableHead.appendChild(totalTitle1);
 
-		const tableBody : HTMLElement = document.getElementById("stats");
+		const tableBody: HTMLElement = document.getElementById("stats");
 		tableBody.innerHTML = "";
 
 		//these arrays are used to create the total row
-		const columnsSum : Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-		const columnsCount : Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		const columnsSum: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+		const columnsCount: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-		for(let i = 0; i <= 10; i++)
+		for (let i = 0; i <= 10; i++)
 		{
-			const row : HTMLTableRowElement = document.createElement("tr");
+			const row: HTMLTableRowElement = document.createElement("tr");
 
 			//create the first cell of the row
-			const num1 : HTMLTableCellElement = document.createElement("th");
+			const num1: HTMLTableCellElement = document.createElement("th");
 			num1.innerHTML = i.toString();
 			row.appendChild(num1);
 
 			//these variables are used to create the total cell, the last cell of the row
-			let sum : number = 0;
-			let count : number = 0;
+			let sum: number = 0;
+			let count: number = 0;
 
-			for(let j = 0; j <= 10; j++)
+			for (let j = 0; j <= 10; j++)
 			{
-				const cell : HTMLTableCellElement = document.createElement("td");
-				let value : number = 0;
+				const cell: HTMLTableCellElement = document.createElement("td");
+				let value: number = 0;
 
 				if(option == "attempts")
 				{
@@ -197,9 +197,9 @@ export class GraphicalGame
 				if(option == "errors")
 				{
 					value = 0;
-					const attempts : Array<Attempt> = stats.getAttemptsForTable(i, j);
-					let countErrors : number = 0;
-					for(let k = 0; k < attempts.length; k++)
+					const attempts: Array<Attempt> = stats.getAttemptsForTable(i, j);
+					let countErrors: number = 0;
+					for (let k = 0; k < attempts.length; k++)
 					{
 						if(attempts[k].num1 * attempts[k].num2 != attempts[k].providedValue)
 							countErrors++;
@@ -219,7 +219,7 @@ export class GraphicalGame
 			}
 
 			//set the totale cell at the end of the row
-			const total : HTMLTableCellElement = document.createElement("td");
+			const total: HTMLTableCellElement = document.createElement("td");
 			if(option == "attempts" && sum > 0)
 				total.innerText = sum.toString();
 			if(option == "errors" && count > 0)
@@ -229,15 +229,15 @@ export class GraphicalGame
 		}
 
 		//set the total row
-		const totalRow : HTMLTableRowElement = document.createElement("tr");
+		const totalRow: HTMLTableRowElement = document.createElement("tr");
 
-		const totalTitle2 : HTMLTableCellElement = document.createElement("th");
+		const totalTitle2: HTMLTableCellElement = document.createElement("th");
 		totalTitle2.innerText = option == "attempts" ? "Σ" : "";
 		totalRow.appendChild(totalTitle2);
 
-		for(let i = 0; i <= 10; i++)
+		for (let i = 0; i <= 10; i++)
 		{
-			const cell : HTMLTableCellElement = document.createElement("td");
+			const cell: HTMLTableCellElement = document.createElement("td");
 
 			if(option == "attempts" && columnsSum[i] > 0)
 				cell.innerText = columnsSum[i].toString();
@@ -249,13 +249,13 @@ export class GraphicalGame
 		}
 
 		//set the last cell (total of total)
-		const totalCell : HTMLTableCellElement = document.createElement("td");
+		const totalCell: HTMLTableCellElement = document.createElement("td");
 		if(option == "attempts")
 			totalCell.innerText = columnsSum.reduce((partial, a) => partial + a).toString();
 		if(option == "errors")
 		{
-			const num : number = columnsSum.reduce((partial, a) => partial + a);
-			const den : number = columnsCount.reduce((partial, a) => partial + a);
+			const num: number = columnsSum.reduce((partial, a) => partial + a);
+			const den: number = columnsCount.reduce((partial, a) => partial + a);
 			totalCell.innerText = Math.round(100 * num / den).toString() + "%";
 		}
 		totalRow.appendChild(totalCell);

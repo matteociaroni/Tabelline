@@ -4,9 +4,9 @@ import {Stats} from "./Stats.js";
 
 export class Game
 {
-	private num1 : Num;
-	private num2 : Num;
-	private status : "playing" | "solved";
+	private num1: Num;
+	private num2: Num;
+	private status: "playing" | "solved";
 
 	constructor()
 	{
@@ -17,22 +17,22 @@ export class Game
 			this.init(true);
 	}
 
-	getNum1() : number
+	getNum1(): number
 	{
 		return this.num1.getValue();
 	}
 
-	getNum2() : number
+	getNum2(): number
 	{
 		return this.num2.getValue();
 	}
 
-	getStatus() : string
+	getStatus(): string
 	{
 		return this.status;
 	}
 
-	setNumbers(random : boolean) : void
+	setNumbers(random: boolean): void
 	{
 		if(random || isNaN(this.num1.getValue()) || isNaN(this.num2.getValue()))
 		{
@@ -41,17 +41,17 @@ export class Game
 		}
 	}
 
-	init(random : boolean = true) : void
+	init(random: boolean = true): void
 	{
 		this.status = "playing";
 		this.setNumbers(random);
 	}
 
-	checkResult(attemptValue : number) : boolean
+	checkResult(attemptValue: number): boolean
 	{
 		if(!isNaN(attemptValue))
 		{
-			const isCorrect : boolean = attemptValue === this.num1.getValue() * this.num2.getValue();
+			const isCorrect: boolean = attemptValue === this.num1.getValue() * this.num2.getValue();
 			this.storeAttempt(attemptValue);
 
 			if(isCorrect)
@@ -65,7 +65,7 @@ export class Game
 	/**
 	 * @return a random integer
 	 */
-	getRandomInt() : number
+	getRandomInt(): number
 	{
 		return Math.round(Math.random() * 10);
 	}
@@ -74,9 +74,9 @@ export class Game
 	 * Store the current attempt in localStorage
 	 * @param provided the value provided by the user for the current attempt
 	 */
-	storeAttempt(provided : number) : void
+	storeAttempt(provided: number): void
 	{
-		let attempts : Array<Attempt> = JSON.parse(localStorage.getItem("tentativi"));
+		let attempts: Array<Attempt> = JSON.parse(localStorage.getItem("tentativi"));
 
 		if(attempts == null)
 			attempts = new Array<Attempt>();
@@ -85,10 +85,10 @@ export class Game
 		localStorage.setItem("tentativi", JSON.stringify(attempts));
 	}
 
-	getAttempts() : Array<Attempt>
+	getAttempts(): Array<Attempt>
 	{
-		const loaded : string = localStorage.getItem("tentativi");
-		let attempts : Array<Attempt> = Array<Attempt>();
+		const loaded: string = localStorage.getItem("tentativi");
+		let attempts: Array<Attempt> = Array<Attempt>();
 
 		if(loaded != null)
 			attempts = JSON.parse(loaded);
@@ -96,19 +96,15 @@ export class Game
 		return attempts;
 	}
 
-	getOrderedAttempts() : Stats
+	getOrderedAttempts(): Stats
 	{
-		const attempts : Array<Attempt> = this.getAttempts();
+		const attempts: Array<Attempt> = this.getAttempts();
 
 		if(attempts == null)
 			return;
 
-		let stats : Stats = new Stats();
-
-		for(let i = 0; i < attempts.length; i++)
-		{
-			stats.pushAttempt(Object.setPrototypeOf(attempts[i], Attempt.prototype));
-		}
+		let stats: Stats = new Stats();
+		attempts.forEach((attempt) => stats.pushAttempt(Object.setPrototypeOf(attempt, Attempt.prototype)));
 		return stats;
 	}
 }

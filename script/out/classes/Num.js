@@ -4,7 +4,7 @@ export class Num
 
 	constructor(id)
 	{
-		this.id = id;
+		this.id=id;
 	}
 
 	getValue()
